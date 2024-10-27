@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Importa Router aquí
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Navbar from "./components/Navbar";
@@ -6,7 +7,7 @@ import Filters from "./components/Filters";
 import ReviewList from "./components/ReviewList";
 import UserPage from "./components/UserPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import './App.css'
+import './App.css';
 
 function App() {
   const { isLoading, error } = useAuth0();
@@ -19,7 +20,6 @@ function App() {
       <div>
         <Navbar />
       </div>
-
       <div className="flex">
         <aside className="w-1/4 p-4 bg-base-200">
           <Filters />
@@ -31,7 +31,7 @@ function App() {
               path="/review"
               element={
                 <ProtectedRoute>
-                  {/* falta pagina de creacion de reviews*/}
+                  {/* Aquí puedes agregar el componente de creación de reviews */}
                 </ProtectedRoute>
               }
             />
