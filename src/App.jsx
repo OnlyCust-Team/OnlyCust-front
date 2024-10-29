@@ -23,16 +23,21 @@ function App() {
         throw new Error('Network response was not ok');
       }
       const data = await res.json();
-      const prices = data.map(review => review.price);
+
+      const updatedData = data.map(review => ({
+        ...review,
+        images: review.images ? `http://localhost:3001/${review.images}` : null 
+      }));
+      setReviews(updatedData);
+      setFilteredReviews(updatedData);
+      const prices = updatedData.map(review => review.price);
       setMaxPrice(Math.max(...prices));
       setMinPrice(Math.min(...prices));
-      setReviews(data);
-      setFilteredReviews(data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
     }
   };
-
+  console.log(filteredReviews)
   const handleFilterChange = (filterValues) => {
     const { priceRange, selectedStore, selectedStar } = filterValues;
 
@@ -61,7 +66,7 @@ function App() {
         <Navbar />
       </div>
       <Routes>
-        <Route path="/" element={
+        <Route path="" element={
           <>
 
             <div className="flex">
@@ -82,11 +87,11 @@ function App() {
       <Routes>
         <Route path="/profile" element={
           <>
-            <ProtectedRoute>
+            {/* <ProtectedRoute> */}
               <main className="flex-1 p-4 bg-base-100">
-                <UserPage />
+                <UserPage reviews={filteredReviews}/>
               </main>
-            </ProtectedRoute>
+            {/* </ProtectedRoute> */}
           </>
         } />
       </Routes>

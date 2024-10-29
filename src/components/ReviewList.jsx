@@ -10,7 +10,6 @@ function ReviewList({ reviews }) {
     const filteredReviews = reviews.filter(review =>
         review.product.toLowerCase().includes(searchText.toLowerCase())
     );
-
     return (
         <section className="flex-1 p-4">
             <div className="form-control mb-4">
@@ -41,14 +40,7 @@ function ReviewList({ reviews }) {
                                 </div>
                             </div>
                         </div>
-                        <dialog id={`my_modal_${review._id}`} className="modal flex">
-                            <div className="modal-box">
-                                {review.images && (
-                                    <div className="carousel w-full">
-                                        {/* carousel? */}
-                                    </div>
-                                )}
-                            </div>
+                        <dialog id={`my_modal_${review._id}`} className="modal">
                             <div className="modal-box">
                                 <form method="dialog">
                                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
@@ -63,6 +55,17 @@ function ReviewList({ reviews }) {
                                     </div>
                                     <div className="text-sm">
                                         <span className="font-bold">Stars:</span> {'⭐'.repeat(review.stars)}
+                                    </div>
+                                    <div className="carousel w-full">
+                                        {/* {review.images.map((image, index) => (
+                                            <div key={index} className="carousel-item">
+                                                <img
+                                                    src={image}
+                                                    alt={`Review ${index}`}
+                                                    className="w-full"
+                                                />
+                                            </div>
+                                        ))} */}
                                     </div>
                                 </div>
                                 <p className="py-4">{review.review}</p>

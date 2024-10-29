@@ -89,8 +89,6 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
           <button className="btn btn-primary m-1" onClick={clearStarFilter}>Clear</button>
         </div>
       </div>
-
-      {/* Price Range Slider */}
       <div className="flex flex-col my-4">
         <label>Price Range: ${priceRange[0]} - ${priceRange[1]}</label>
         <input
