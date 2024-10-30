@@ -4,7 +4,9 @@ import { useState } from 'react';
 function UserProfile({ userReviews }) {
     const { user } = useAuth0();
     const [openModalId, setOpenModalId] = useState(null);
-
+    
+    console.log(userReviews); // Para verificar las reseñas del usuario
+    
     const toggleModal = (reviewId) => {
         setOpenModalId(openModalId === reviewId ? null : reviewId);
     };
