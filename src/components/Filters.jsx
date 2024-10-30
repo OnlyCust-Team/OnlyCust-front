@@ -20,10 +20,6 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
     fetchStores();
   }, []);
 
-  useEffect(() => {
-    onFilterChange({ priceRange, selectedStore, selectedStar });
-  }, [priceRange, selectedStore, selectedStar, onFilterChange]);
-
   const handleStoreChange = (store) => {
     setSelectedStore(store);
   };
@@ -49,6 +45,14 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
   const clearPriceFilter = () => {
     setPriceRange([minPrice, maxPrice]);
   };
+
+  useEffect(() => {
+    onFilterChange({ priceRange, selectedStore, selectedStar });
+  }, [priceRange, selectedStore, selectedStar, onFilterChange]);
+
+  useEffect(() => {
+    setPriceRange([minPrice, maxPrice]);
+  }, [minPrice, maxPrice]);
 
   return (
     <div>
