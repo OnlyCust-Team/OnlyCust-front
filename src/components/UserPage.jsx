@@ -21,18 +21,23 @@
 // }
 
 // export default UserPage;
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserProfile from './UserProfile';
 import AddReview from './AddReview';
 
-function UserPage() {
+function UserPage({ reviews, userId }) {
   // Estado para seleccionar la vista activa
   const [activeView, setActiveView] = useState('profile');
+  const [userReviews, setUserReviews] = useState([]);
+
+  // Filtrar reseñas del usuario actual
+  useEffect(() => {
+    const filteredReviews = reviews.filter(review => review.userId === userId);
+    setUserReviews(filteredReviews);
+  }, [reviews, userId]);
 
   return (
     <div className="p-4 max-w-xl mx-auto">
-      {/* <h2 className="text-2xl font-bold mb-4 text-center">User Page</h2> */}
-      
       {/* Botones de navegación centrados */}
       <div className="flex justify-center gap-4 mb-6">
         <button
@@ -50,7 +55,7 @@ function UserPage() {
       </div>
 
       {/* Renderizado condicional basado en la vista activa */}
-      {activeView === 'profile' ? <UserProfile /> : <AddReview />}
+      {activeView === 'profile' ? <UserProfile reviews={userReviews} /> : <AddReview />}
     </div>
   );
 }
