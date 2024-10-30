@@ -1,11 +1,11 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState } from 'react';
 
-function UserProfile({ userReviews }) {
+function UserProfile({ userReviews = [] }) {
     const { user } = useAuth0();
     const [openModalId, setOpenModalId] = useState(null);
     
-    console.log(userReviews); // Para verificar las reseñas del usuario
+    console.log(userReviews); // Verificar reseñas del usuario
     
     const toggleModal = (reviewId) => {
         setOpenModalId(openModalId === reviewId ? null : reviewId);
@@ -22,7 +22,6 @@ function UserProfile({ userReviews }) {
                 <div className="grid grid-cols-1 gap-4">
                     {userReviews.map((review) => (
                         <div key={review._id}>
-                            {/* Tarjeta de la reseña */}
                             <div className="card bg-base-100 shadow-xl" onClick={() => toggleModal(review._id)}>
                                 <div className="card-body">
                                     <h2 className="card-title">{review.product}</h2>
@@ -66,7 +65,10 @@ function UserProfile({ userReviews }) {
                     ))}
                 </div>
             ) : (
-                <button className="btn btn-primary mt-4">Add your own review!</button>
+                <div className="flex flex-col items-center mt-4">
+                    <img src="https://cdn-icons-png.flaticon.com/512/10845/10845508.png" alt="Add review icon" className="w-16 h-16 mb-2" />
+                    <p className="text-lg font-semibold">Add your own review! :D</p>
+                </div>
             )}
         </div>
     );

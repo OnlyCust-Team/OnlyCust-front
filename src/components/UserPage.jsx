@@ -55,7 +55,7 @@ function UserPage({ reviews, userId }) {
       </div>
 
       {/* Renderizado condicional basado en la vista activa */}
-      {activeView === 'profile' ? <UserProfile reviews={userReviews} /> : <AddReview />}
+      {activeView === 'profile' ? <UserProfile userReviews={userReviews} /> : <AddReview />}
     </div>
   );
 }
