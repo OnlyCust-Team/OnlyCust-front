@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Navbar from "./components/Navbar";
@@ -8,6 +9,7 @@ import ReviewList from "./components/ReviewList";
 import UserPage from "./components/UserPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import './App.css';
+import AddReview from './components/AddReview';
 
 function App() {
   const { isLoading, error } = useAuth0();
@@ -17,6 +19,7 @@ function App() {
   const [maxPrice, setMaxPrice] = useState(1000);
 
   const getReviews = async () => {
+
     try {
       const res = await fetch(`http://localhost:3001/review`);
       if (!res.ok) {
@@ -26,7 +29,7 @@ function App() {
 
       const updatedData = data.map(review => ({
         ...review,
-        images: review.images ? `http://localhost:3001/${review.images}` : null 
+        images: review.images ? `http://localhost:3001/${review.images}` : null
       }));
       setReviews(updatedData);
       setFilteredReviews(updatedData);
@@ -37,7 +40,6 @@ function App() {
       console.error('Error fetching reviews:', error);
     }
   };
-  console.log(filteredReviews)
   const handleFilterChange = (filterValues) => {
     const { priceRange, selectedStore, selectedStar } = filterValues;
 
@@ -60,15 +62,17 @@ function App() {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Oops... {error.message}</div>;
 
+  const navigate = useNavigate;
+
   return (
     <Router>
       <div>
         <Navbar />
       </div>
       <Routes>
-        <Route path="" element={
-          <>
-
+        <Route
+          path="/"
+          element={
             <div className="flex">
               <aside className="w-1/4 p-4 bg-base-200">
                 <Filters
@@ -81,22 +85,23 @@ function App() {
                 <ReviewList reviews={filteredReviews} />
               </main>
             </div>
-          </>
-        } />
-      </Routes>
-      <Routes>
-        <Route path="/profile" element={
-          <>
-            {/* <ProtectedRoute> */}
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
               <main className="flex-1 p-4 bg-base-100">
-                <UserPage reviews={filteredReviews}/>
+                <UserPage reviews={filteredReviews} />
               </main>
-            {/* </ProtectedRoute> */}
-          </>
-        } />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
+      <div>
+        <AddReview />
+      </div>
     </Router>
   );
 }
-
 export default App;

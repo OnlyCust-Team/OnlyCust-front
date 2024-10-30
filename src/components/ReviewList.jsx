@@ -56,7 +56,7 @@ function ReviewList({ reviews }) {
                                     <div className="text-sm">
                                         <span className="font-bold">Stars:</span> {'⭐'.repeat(review.stars)}
                                     </div>
-                                    <div className="carousel w-full">
+                                    {/* <div className="carousel w-full">
                                         {/* {review.images.map((image, index) => (
                                             <div key={index} className="carousel-item">
                                                 <img
@@ -66,7 +66,6 @@ function ReviewList({ reviews }) {
                                                 />
                                             </div>
                                         ))} */}
-                                    </div>
                                 </div>
                                 <p className="py-4">{review.review}</p>
                             </div>
