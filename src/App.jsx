@@ -15,6 +15,7 @@ function App() {
   const [filteredReviews, setFilteredReviews] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(2000);
+  const [refresh,setRefresh] = useState(false);
 
   const getReviews = async () => {
     try {
@@ -56,7 +57,8 @@ function App() {
 
   useEffect(() => {
     getReviews();
-  }, []);
+    console.log('anon');
+  }, [refresh]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Oops... {error.message}</div>;
@@ -89,7 +91,7 @@ function App() {
           element={
             <ProtectedRoute>
               <main className="flex-1 p-4 bg-base-100">
-                <UserPage reviews={filteredReviews} />
+                <UserPage reviews={filteredReviews} setRefresh={setRefresh} />
               </main>
             </ProtectedRoute>
           }

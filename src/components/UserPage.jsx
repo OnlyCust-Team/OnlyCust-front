@@ -25,7 +25,7 @@ import { useEffect, useState } from 'react';
 import UserProfile from './UserProfile';
 import AddReview from './AddReview';
 
-function UserPage({ reviews, userId }) {
+function UserPage({ reviews, userId, setRefresh }) {
   // Estado para seleccionar la vista activa
   const [activeView, setActiveView] = useState('profile');
   const [userReviews, setUserReviews] = useState([]);
@@ -55,7 +55,7 @@ function UserPage({ reviews, userId }) {
       </div>
 
       {/* Renderizado condicional basado en la vista activa */}
-      {activeView === 'profile' ? <UserProfile userReviews={userReviews} /> : <AddReview />}
+      {activeView === 'profile' ? <UserProfile userReviews={userReviews} /> : <AddReview setRefresh={setRefresh} />}
     </div>
   );
 }

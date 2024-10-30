@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const AddReview = () => {
+const AddReview = ({ setRefresh }) => {
     const [product, setProduct] = useState('');
     const [review, setReview] = useState('');
     const [store, setStore] = useState('');
@@ -28,6 +28,8 @@ const AddReview = () => {
             setMessage(response.data.message);
         } catch (error) {
             setMessage('Error adding review: ' + error.message);
+        } finally{
+            setRefresh(true)
         }
     };
 
