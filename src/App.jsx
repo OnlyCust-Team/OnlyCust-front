@@ -76,33 +76,26 @@ function App() {
         <Navbar />
       </div>
       <Routes>
-        <Route path="" element={
-          <>
-
-            <div className="flex">
-              <aside className="w-1/4 p-4 bg-base-200">
-                <Filters
-                  onFilterChange={handleFilterChange}
-                  minPrice={minPrice}
-                  maxPrice={maxPrice}
-                />
-              </aside>
-              <main className="flex-1 p-4 bg-base-100">
-                <ReviewList products={filteredReviews} />
-              </main>
-            </div>
-          </>
+        <Route path="/" element={
+          <div className="flex">
+            <aside className="w-1/4 p-4 bg-base-200">
+              <Filters
+                onFilterChange={handleFilterChange}
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+              />
+            </aside>
+            <main className="flex-1 p-4 bg-base-100">
+              <ReviewList products={filteredReviews} />
+            </main>
+          </div>
         } />
-      </Routes>
-      <Routes>
         <Route path="/profile" element={
-          <>
-            <ProtectedRoute>
-              <main className="flex-1 p-4 bg-base-100">
-                <UserPage />
-              </main>
-            </ProtectedRoute>
-          </>
+          <ProtectedRoute>
+            <main className="flex-1 p-4 bg-base-100">
+              <UserPage />
+            </main>
+          </ProtectedRoute>
         } />
       </Routes>
     </Router>

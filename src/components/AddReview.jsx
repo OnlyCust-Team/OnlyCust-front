@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 const AddReview = ({ setRefresh }) => {
@@ -116,5 +117,9 @@ const AddReview = ({ setRefresh }) => {
         </form>
     );
 };
+
+AddReview.propTypes = {
+    setRefresh: PropTypes.func.isRequired,
+  };
 
 export default AddReview;

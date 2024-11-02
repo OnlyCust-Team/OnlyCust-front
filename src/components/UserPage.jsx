@@ -1,8 +1,9 @@
-import { useAuth0 } from '@auth0/auth0-react';
+// import { useAuth0 } from '@auth0/auth0-react';
+import PropTypes from 'prop-types';
 import AddReview from './AddReview'; 
 
 function UserPage() {
-  const { user } = useAuth0();
+  // const { user } = useAuth0();
 
   return (
     <div>
@@ -17,5 +18,13 @@ function UserPage() {
     </div>
   );
 }
+
+UserPage.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    picture: PropTypes.string,
+  }),
+};
 
 export default UserPage;

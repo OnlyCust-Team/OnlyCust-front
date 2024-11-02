@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 
 const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
   const [brands, setBrands] = useState([]);  
@@ -25,7 +26,7 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
     onFilterChange({ priceRange, selectedBrand, selectedStar }); 
   };
 
-  useEffect(updateFilters, [priceRange, selectedBrand, selectedStar]);
+  useEffect(updateFilters, [priceRange, selectedBrand, selectedStar, onFilterChange]);
 
   const handleBrandChange = (brand) => setSelectedBrand(brand); 
   const handleStarChange = (star) => setSelectedStar(star);
@@ -99,6 +100,12 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
       </div>
     </div>
   );
+};
+
+Filters.propTypes = {
+  onFilterChange: PropTypes.func.isRequired,
+  minPrice: PropTypes.number.isRequired,
+  maxPrice: PropTypes.number.isRequired,
 };
 
 export default Filters;
