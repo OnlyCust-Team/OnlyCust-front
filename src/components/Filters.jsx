@@ -1,80 +1,65 @@
 import { useEffect, useState } from "react";
 
 const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
-  const [stores, setStores] = useState([]);
-  const [selectedStore, setSelectedStore] = useState("");
+  const [brands, setBrands] = useState([]);  
+  const [selectedBrand, setSelectedBrand] = useState("");  
   const [selectedStar, setSelectedStar] = useState("");
-  const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
+  const [priceRange, setPriceRange] = useState([0,0]);
 
   useEffect(() => {
-    const fetchStores = async () => {
+    setPriceRange([minPrice, maxPrice]);
+    const fetchBrands = async () => {  
       try {
-        const response = await fetch(`http://localhost:3001/stores`);
+        const response = await fetch(`http://localhost:3001/stores`); 
         const data = await response.json();
-        setStores(data);
+        setBrands(data);
       } catch (error) {
-        console.error("Error fetching stores:", error);
+        console.error("Error fetching brands:", error);  
       }
     };
 
-    fetchStores();
-  }, []);
+    fetchBrands();
+  }, [minPrice, maxPrice]);
 
-  useEffect(() => {
-    onFilterChange({ priceRange, selectedStore, selectedStar });
-  }, [priceRange, selectedStore, selectedStar, onFilterChange]);
-
-  const handleStoreChange = (store) => {
-    setSelectedStore(store);
+  const updateFilters = () => {
+    onFilterChange({ priceRange, selectedBrand, selectedStar }); 
   };
 
-  const handleStarChange = (star) => {
-    setSelectedStar(star);
-  };
+  useEffect(updateFilters, [priceRange, selectedBrand, selectedStar]);
 
+  const handleBrandChange = (brand) => setSelectedBrand(brand); 
+  const handleStarChange = (star) => setSelectedStar(star);
   const handlePriceChange = (e) => {
-    const newPriceRange = [...priceRange];
-    newPriceRange[e.target.dataset.index] = Number(e.target.value);
-    setPriceRange(newPriceRange);
-  };
-
-  const clearStoreFilter = () => {
-    setSelectedStore("");
-  };
-
-  const clearStarFilter = () => {
-    setSelectedStar("");
-  };
-
-  const clearPriceFilter = () => {
-    setPriceRange([minPrice, maxPrice]);
+    const newRange = [...priceRange];
+    newRange[e.target.dataset.index] = Number(e.target.value);
+    if (newRange[0] <= newRange[1]) setPriceRange(newRange);
   };
 
   return (
     <div>
       <h2 className="font-bold text-3xl text-left">Filters</h2>
-      
+
       <div className="my-4">
         <div className="flex items-center">
-          <div className="dropdown dropdown-hover flex-1">
+          <div className="dropdown dropdown-hover flex-1" aria-label="Brand Filter">
             <div tabIndex={0} role="button" className="btn m-1">
-              {selectedStore || "Select a store"}
+              {selectedBrand || "Select a brand"}
             </div>
             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-              {stores.map((store) => (
-                <li key={store} onClick={() => handleStoreChange(store)}>
-                  <a>{store}</a>
+              {brands.length ? brands.map((brand) => (  
+                <li key={brand} onClick={() => handleBrandChange(brand)}> 
+                  <a>{brand}</a>
                 </li>
-              ))}
+              )) : <li>No brands available</li>} 
             </ul>
           </div>
-          <button className="btn btn-primary m-1" onClick={clearStoreFilter}>Clear</button>
+          <button className="btn btn-primary m-1" onClick={() => setSelectedBrand("")}>Clear</button>
         </div>
       </div>
-      
+
       <div className="my-4">
         <div className="flex items-center">
-          <div className="dropdown dropdown-hover flex-1">
+          <div className="dropdown dropdown-hover flex-1" aria-label="Star Rating Filter">
             <div tabIndex={0} role="button" className="btn m-1">
               {selectedStar ? `${selectedStar} Star${selectedStar > 1 ? 's' : ''}` : "Select stars"}
             </div>
@@ -86,11 +71,10 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
               ))}
             </ul>
           </div>
-          <button className="btn btn-primary m-1" onClick={clearStarFilter}>Clear</button>
+          <button className="btn btn-primary m-1" onClick={() => setSelectedStar("")}>Clear</button>
         </div>
       </div>
 
-      {/* Price Range Slider */}
       <div className="flex flex-col my-4">
         <label>Price Range: ${priceRange[0]} - ${priceRange[1]}</label>
         <input
@@ -111,7 +95,7 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
           onChange={handlePriceChange}
           className="range range-xs"
         />
-        <button className="btn btn-primary m-1 mt-4" onClick={clearPriceFilter}>Clear Price</button>
+        <button className="btn btn-primary m-1 mt-4" onClick={() => setPriceRange([minPrice, maxPrice])}>Clear Price</button>
       </div>
     </div>
   );
