@@ -1,0 +1,207 @@
+[
+  {
+    "_id": "asdiuadjyasgdjasdh123897asd",
+    "slug": "iphone-14",
+    "name": "iPhone 14",
+    "brand": "Apple",
+    "gama": "Alta",
+    "image": "https://placehold.co/600x400",
+    "created_at": "2024-10-29T12:00:00.000",
+    "reviews": [
+      {
+        "username": "bruno@enter.edu.pe",
+        "review": "No pasa nada. Mejor invierte en el Pro.",
+        "stars": 3,
+        "created_at": "2024-10-30T20:00:00.000"
+      },
+      {
+        "username": "alex@enter.edu.pe",
+        "review": "Me gusta bastante.",
+        "stars": 5,
+        "created_at": "2024-10-31T12:00:00.000"
+      },
+      {
+        "username": "maria@enter.edu.pe",
+        "review": "Buen teléfono, pero caro.",
+        "stars": 4,
+        "created_at": "2024-11-01T10:00:00.000"
+      },
+      {
+        "username": "juan@enter.edu.pe",
+        "review": "Excelente cámara.",
+        "stars": 5,
+        "created_at": "2024-11-02T14:00:00.000"
+      },
+      {
+        "username": "ana@enter.edu.pe",
+        "review": "No vale la pena el precio.",
+        "stars": 5,
+        "created_at": "2024-11-03T16:00:00.000"
+      }
+    ]
+  },
+  {
+    "_id": "asdiuadjyasgdjasdh123897ast",
+    "slug": "iphone-15",
+    "name": "iPhone 15",
+    "brand": "Apple",
+    "gama": "Alta",
+    "image": "https://placehold.co/400",
+    "created_at": "2024-10-29T12:00:00.000",
+    "reviews": [
+      {
+        "username": "bruno@enter.edu.pe",
+        "review": "No pasa nada. Mejor invierte en el Pro.",
+        "stars": 3,
+        "created_at": "2024-10-30T20:00:00.000"
+      },
+      {
+        "username": "alex@enter.edu.pe",
+        "review": "Me gusta bastante.",
+        "stars": 3,
+        "created_at": "2024-10-31T12:00:00.000"
+      },
+      {
+        "username": "maria@enter.edu.pe",
+        "review": "Buen teléfono, pero caro.",
+        "stars": 3,
+        "created_at": "2024-11-01T10:00:00.000"
+      },
+      {
+        "username": "juan@enter.edu.pe",
+        "review": "Excelente cámara.",
+        "stars": 1,
+        "created_at": "2024-11-02T14:00:00.000"
+      },
+      {
+        "username": "ana@enter.edu.pe",
+        "review": "No vale la pena el precio.",
+        "stars": 3,
+        "created_at": "2024-11-03T16:00:00.000"
+      }
+    ]
+  },
+  {
+    "_id": "asdiuadjyasgdjasdh123897asu",
+    "slug": "samsung-galaxy-s21",
+    "name": "Samsung Galaxy S21",
+    "brand": "Samsung",
+    "gama": "Alta",
+    "image": "https://placehold.co/600x400",
+    "created_at": "2024-11-01T10:00:00.000",
+    "reviews": [
+      {
+        "username": "maria@enter.edu.pe",
+        "review": "Excelente rendimiento y cámara.",
+        "stars": 5,
+        "created_at": "2024-11-02T14:00:00.000"
+      },
+      {
+        "username": "juan@enter.edu.pe",
+        "review": "Muy buen teléfono, pero caro.",
+        "stars": 4,
+        "created_at": "2024-11-03T16:00:00.000"
+      },
+      {
+        "username": "ana@enter.edu.pe",
+        "review": "Buena batería.",
+        "stars": 4,
+        "created_at": "2024-11-04T18:00:00.000"
+      },
+      {
+        "username": "carlos@enter.edu.pe",
+        "review": "Pantalla impresionante.",
+        "stars": 5,
+        "created_at": "2024-11-05T20:00:00.000"
+      },
+      {
+        "username": "sofia@enter.edu.pe",
+        "review": "Un poco pesado.",
+        "stars": 3,
+        "created_at": "2024-11-06T22:00:00.000"
+      }
+    ]
+  },
+  {
+    "_id": "asdiuadjyasgdjasdh123897asv",
+    "slug": "google-pixel-6",
+    "name": "Google Pixel 6",
+    "brand": "Google",
+    "gama": "Media",
+    "image": "https://placehold.co/600x400",
+    "created_at": "2024-11-01T11:00:00.000",
+    "reviews": [
+      {
+        "username": "ana@enter.edu.pe",
+        "review": "Buena relación calidad-precio.",
+        "stars": 4,
+        "created_at": "2024-11-02T15:00:00.000"
+      },
+      {
+        "username": "luis@enter.edu.pe",
+        "review": "La batería podría ser mejor.",
+        "stars": 3,
+        "created_at": "2024-11-03T17:00:00.000"
+      },
+      {
+        "username": "maria@enter.edu.pe",
+        "review": "Buen rendimiento.",
+        "stars": 4,
+        "created_at": "2024-11-04T19:00:00.000"
+      },
+      {
+        "username": "juan@enter.edu.pe",
+        "review": "Cámara decente.",
+        "stars": 4,
+        "created_at": "2024-11-05T21:00:00.000"
+      },
+      {
+        "username": "carlos@enter.edu.pe",
+        "review": "Diseño atractivo.",
+        "stars": 4,
+        "created_at": "2024-11-06T23:00:00.000"
+      }
+    ]
+  },
+  {
+    "_id": "asdiuadjyasgdjasdh123897asw",
+    "slug": "oneplus-9",
+    "name": "OnePlus 9",
+    "brand": "OnePlus",
+    "gama": "Alta",
+    "image": "https://placehold.co/600x400",
+    "created_at": "2024-11-01T12:00:00.000",
+    "reviews": [
+      {
+        "username": "carlos@enter.edu.pe",
+        "review": "Rápido y eficiente.",
+        "stars": 5,
+        "created_at": "2024-11-02T18:00:00.000"
+      },
+      {
+        "username": "sofia@enter.edu.pe",
+        "review": "Me encanta el diseño.",
+        "stars": 4,
+        "created_at": "2024-11-03T19:00:00.000"
+      },
+      {
+        "username": "maria@enter.edu.pe",
+        "review": "Buena batería.",
+        "stars": 4,
+        "created_at": "2024-11-04T20:00:00.000"
+      },
+      {
+        "username": "juan@enter.edu.pe",
+        "review": "Pantalla nítida.",
+        "stars": 5,
+        "created_at": "2024-11-05T21:00:00.000"
+      },
+      {
+        "username": "ana@enter.edu.pe",
+        "review": "Un poco caro.",
+        "stars": 3,
+        "created_at": "2024-11-06T22:00:00.000"
+      }
+    ]
+  }
+]
