@@ -55,4 +55,12 @@ function UserPage() {
   );
 }
 
+UserPage.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    picture: PropTypes.string,
+  }),
+};
+
 export default UserPage;
