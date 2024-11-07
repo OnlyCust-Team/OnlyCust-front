@@ -29,7 +29,6 @@ function ReviewList({ products }) {
                     <div key={product._id} className="card bg-base-100 shadow-xl" onClick={()=>document.getElementById(`my_modal_${product._id}`).showModal()}>
                         <div className="card-body">
                             <h2 className="card-title">{product.productName}</h2>
-                            {/* imagen temporal hasta que se haga el carousel */}
                             <img src={product.productImage} alt={product.productName} className="mb-4" />
                             <div className="review-item">
                                 <p>{product.review}</p>
@@ -54,7 +53,6 @@ function ReviewList({ products }) {
                         </div>
                         <dialog id={`my_modal_${product._id}`} className="modal flex">
                             <div className="modal-box">
-                                {/* carousel?*/}
                             </div>
                             <div className="modal-box">
                                 <form method="dialog">
