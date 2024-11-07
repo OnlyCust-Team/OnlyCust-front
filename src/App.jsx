@@ -24,30 +24,37 @@ function App() {
         throw new Error('Network response was not ok');
       }
       const data = await res.json();
+      
+      const allReviews = data.flatMap(product =>
+        product.reviews.map(review => ({
+          ...review,
+          productName: product.name,
+          productBrand: product.brand,
+          productPrice: product.price,
+          productImage: product.image,
+        }))
+      );
 
-      const updatedData = data.map(review => ({
-        ...review,
-        images: review.images ? `http://localhost:3001/${review.images}` : null
-      }));
-      setReviews(updatedData);
-      setFilteredReviews(updatedData);
-      const prices = updatedData.map(review => review.price);
-      setMinPrice(Math.min(...prices));
+      const prices = data.map(product => product.price);
       setMaxPrice(Math.max(...prices));
+      setMinPrice(Math.min(...prices));
+
+      setReviews(allReviews);
+      setFilteredReviews(allReviews);
     } catch (error) {
       console.error('Error fetching reviews:', error);
     }
   };
 
   const handleFilterChange = (filterValues) => {
-    const { priceRange, selectedStore, selectedStar } = filterValues;
+    const { priceRange, selectedBrand, selectedStar } = filterValues;
 
     const newFilteredReviews = reviews.filter(review => {
-      const matchesPrice = review.price >= priceRange[0] && review.price <= priceRange[1];
-      const matchesStore = !selectedStore || review.store.toLowerCase().includes(selectedStore.toLowerCase());
+      const matchesPrice = review.productPrice >= priceRange[0] && review.productPrice <= priceRange[1];
+      const matchesBrand = !selectedBrand || review.productBrand.toLowerCase().includes(selectedBrand.toLowerCase());
       const matchesStars = !selectedStar || review.stars >= selectedStar;
 
-      return matchesPrice && matchesStore && matchesStars;
+      return matchesPrice && matchesBrand && matchesStars;
     });
 
     if (JSON.stringify(filteredReviews) !== JSON.stringify(newFilteredReviews)) {
@@ -56,8 +63,7 @@ function App() {
   };
 
   useEffect(() => {
-    getReviews();
-    console.log('anon');
+    getReviews()
   }, [refresh]);
 
   if (isLoading) return <div>Loading...</div>;
@@ -68,7 +74,6 @@ function App() {
       <div>
         <Navbar />
       </div>
-      <Routes>
         <Route
           path="/"
           element={
