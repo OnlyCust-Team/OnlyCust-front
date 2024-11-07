@@ -10,12 +10,12 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import './App.css';
 
 function App() {
-  const { isLoading, error } = useAuth0();
+  const { isLoading, error} = useAuth0();
   const [reviews, setReviews] = useState([]);
   const [filteredReviews, setFilteredReviews] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
-  const [refresh, setRefresh] = useState(false);
+  const [maxPrice, setMaxPrice] = useState(2000);
+  const [refresh,setRefresh] = useState(false);
 
   const getReviews = async () => {
     try {
@@ -24,7 +24,7 @@ function App() {
         throw new Error('Network response was not ok');
       }
       const data = await res.json();
-
+      
       const allReviews = data.flatMap(product =>
         product.reviews.map(review => ({
           ...review,
@@ -41,7 +41,6 @@ function App() {
 
       setReviews(allReviews);
       setFilteredReviews(allReviews);
-      setRefresh(true)
     } catch (error) {
       console.error('Error fetching reviews:', error);
     }
@@ -75,28 +74,33 @@ function App() {
       <div>
         <Navbar />
       </div>
-      <Routes>
-        <Route path="/" element={
-          <div className="flex">
-            <aside className="w-1/4 p-4 bg-base-200">
-              <Filters
-                onFilterChange={handleFilterChange}
-                minPrice={minPrice}
-                maxPrice={maxPrice}
-              />
-            </aside>
-            <main className="flex-1 p-4 bg-base-100">
-              <ReviewList products={filteredReviews} />
-            </main>
-          </div>
-        } />
-        <Route path="/profile" element={
-          <ProtectedRoute>
-            <main className="flex-1 p-4 bg-base-100">
-              <UserPage />
-            </main>
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/"
+          element={
+            <div className="flex">
+              <aside className="w-1/4 p-4 bg-base-200">
+                <Filters
+                  onFilterChange={handleFilterChange}
+                  minPrice={minPrice}
+                  maxPrice={maxPrice}
+                />
+              </aside>
+              <main className="flex-1 p-4 bg-base-100">
+                <ReviewList reviews={filteredReviews} />
+              </main>
+            </div>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <main className="flex-1 p-4 bg-base-100">
+                <UserPage reviews={filteredReviews} setRefresh={setRefresh} />
+              </main>
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );

@@ -8,7 +8,6 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
   const [priceRange, setPriceRange] = useState([0,0]);
 
   useEffect(() => {
-    setPriceRange([minPrice, maxPrice]);
     const fetchBrands = async () => {  
       try {
         const response = await fetch(`http://localhost:3001/stores`); 
@@ -18,15 +17,17 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
         console.error("Error fetching brands:", error);  
       }
     };
-
-    fetchBrands();
-  }, [minPrice, maxPrice]);
+  }, []);
 
   const updateFilters = () => {
     onFilterChange({ priceRange, selectedBrand, selectedStar }); 
   };
+  
+   useEffect(() => {
+    setPriceRange([minPrice, maxPrice]);
+  }, [minPrice, maxPrice]);
 
-  useEffect(updateFilters, [priceRange, selectedBrand, selectedStar, onFilterChange]);
+ useEffect(updateFilters, [priceRange, selectedBrand, selectedStar, onFilterChange]);
 
   const handleBrandChange = (brand) => setSelectedBrand(brand); 
   const handleStarChange = (star) => setSelectedStar(star);
@@ -35,7 +36,7 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
     newRange[e.target.dataset.index] = Number(e.target.value);
     if (newRange[0] <= newRange[1]) setPriceRange(newRange);
   };
-
+  
   return (
     <div>
       <h2 className="font-bold text-3xl text-left">Filters</h2>
@@ -75,7 +76,6 @@ const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
           <button className="btn btn-primary m-1" onClick={() => setSelectedStar("")}>Clear</button>
         </div>
       </div>
-
       <div className="flex flex-col my-4">
         <label>Price Range: ${priceRange[0]} - ${priceRange[1]}</label>
         <input

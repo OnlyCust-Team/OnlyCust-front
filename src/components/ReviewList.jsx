@@ -11,7 +11,6 @@ function ReviewList({ products }) {
     const filteredProducts = products.filter(product =>
         product.productName.toLowerCase().includes(searchText.toLowerCase())
     );
-
     return (
         <section className="flex-1 p-4">
             <div className="form-control mb-4">
@@ -53,8 +52,6 @@ function ReviewList({ products }) {
                         </div>
                         <dialog id={`my_modal_${product._id}`} className="modal flex">
                             <div className="modal-box">
-                            </div>
-                            <div className="modal-box">
                                 <form method="dialog">
                                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                 </form>
@@ -69,6 +66,16 @@ function ReviewList({ products }) {
                                     <div className="text-sm">
                                         <span className="font-bold">Stars:</span> {'⭐'.repeat(product.stars)}
                                     </div>
+                                    {/* <div className="carousel w-full">
+                                        {/* {review.images.map((image, index) => (
+                                            <div key={index} className="carousel-item">
+                                                <img
+                                                    src={image}
+                                                    alt={`Review ${index}`}
+                                                    className="w-full"
+                                                />
+                                            </div>
+                                        ))} */}
                                 </div>
                                 <p className="py-4">{product.review}</p>
                                 <div className="text-sm">
