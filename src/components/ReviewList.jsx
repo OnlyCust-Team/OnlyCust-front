@@ -11,6 +11,7 @@ function ReviewList({ products }) {
     const filteredProducts = products.filter(product =>
         product.productName.toLowerCase().includes(searchText.toLowerCase())
     );
+
     return (
         <section className="flex-1 p-4">
             <div className="form-control mb-4">
@@ -25,15 +26,16 @@ function ReviewList({ products }) {
             <h2 className="text-xl font-bold mb-4">Reviews</h2>
             <div className="grid grid-cols-1 gap-4">
                 {filteredProducts.map((product) => (
-                    <div key={product._id} className="card bg-base-100 shadow-xl" onClick={()=>document.getElementById(`my_modal_${product._id}`).showModal()}>
-                        <div className="card-body">
+                    <div key={product._id} className="card bg-base-100 shadow-xl">
+                        <div className="card-body" onClick={() => document.getElementById(`my_modal_${product._id}`).showModal()}>
                             <h2 className="card-title">{product.productName}</h2>
+                            {/* Temporary image until the carousel is added */}
                             <img src={product.productImage} alt={product.productName} className="mb-4" />
                             <div className="review-item">
                                 <p>{product.review}</p>
                                 <div className="flex justify-between mt-4">
                                     <div className="text-sm">
-                                        <span className="font-bold">Store:</span> {product.productBrand}
+                                        <span className="font-bold">Brand:</span> {product.productBrand}
                                     </div>
                                     <div className="text-sm">
                                         <span className="font-bold">Price:</span> ${product.productPrice.toFixed(2)}
@@ -58,7 +60,7 @@ function ReviewList({ products }) {
                                 <h3 className="font-bold text-lg">{product.productName}</h3>
                                 <div className="flex justify-between mt-4">
                                     <div className="text-sm">
-                                        <span className="font-bold">Store:</span> {product.productBrand}
+                                        <span className="font-bold">Brand:</span> {product.productBrand}
                                     </div>
                                     <div className="text-sm">
                                         <span className="font-bold">Price:</span> ${product.productPrice.toFixed(2)}
@@ -66,16 +68,6 @@ function ReviewList({ products }) {
                                     <div className="text-sm">
                                         <span className="font-bold">Stars:</span> {'⭐'.repeat(product.stars)}
                                     </div>
-                                    {/* <div className="carousel w-full">
-                                        {/* {review.images.map((image, index) => (
-                                            <div key={index} className="carousel-item">
-                                                <img
-                                                    src={image}
-                                                    alt={`Review ${index}`}
-                                                    className="w-full"
-                                                />
-                                            </div>
-                                        ))} */}
                                 </div>
                                 <p className="py-4">{product.review}</p>
                                 <div className="text-sm">
@@ -108,5 +100,4 @@ ReviewList.propTypes = {
         })
     ).isRequired,
 };
-
 export default ReviewList;

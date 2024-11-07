@@ -10,12 +10,12 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import './App.css';
 
 function App() {
-  const { isLoading, error} = useAuth0();
+  const { isLoading, error } = useAuth0();
   const [reviews, setReviews] = useState([]);
   const [filteredReviews, setFilteredReviews] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(2000);
-  const [refresh,setRefresh] = useState(false);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [refresh, setRefresh] = useState(false);
 
   const getReviews = async () => {
     try {
@@ -24,21 +24,25 @@ function App() {
         throw new Error('Network response was not ok');
       }
       const data = await res.json();
-      
-      const allReviews = data.flatMap(product =>
-        product.reviews.map(review => ({
-          ...review,
-          productName: product.name,
-          productBrand: product.brand,
-          productPrice: product.price,
-          productImage: product.image,
-        }))
-      );
-
-      const prices = data.map(product => product.price);
-      setMaxPrice(Math.max(...prices));
-      setMinPrice(Math.min(...prices));
-
+      const allReviews = data.flatMap(product => {
+        if (product.reviews && Array.isArray(product.reviews)) {
+          return product.reviews.map(review => ({
+            ...review,
+            productName: product.name || 'Unknown Name',
+            productBrand: product.brand || 'Unknown Brand',
+            productPrice: product.price || 0,
+            productImage: product.image || '',
+          }));
+        }
+        return [];
+      });
+  
+      if (data.length > 0) {
+        const prices = data.map(product => product.price).filter(price => typeof price === 'number');
+        setMaxPrice(Math.max(...prices));
+        setMinPrice(Math.min(...prices));
+      }
+  
       setReviews(allReviews);
       setFilteredReviews(allReviews);
     } catch (error) {
@@ -63,8 +67,8 @@ function App() {
   };
 
   useEffect(() => {
-    getReviews()
-  }, [refresh]);
+    getReviews();
+  }, []);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Oops... {error.message}</div>;
@@ -74,6 +78,7 @@ function App() {
       <div>
         <Navbar />
       </div>
+      <Routes>
         <Route
           path="/"
           element={
@@ -86,7 +91,7 @@ function App() {
                 />
               </aside>
               <main className="flex-1 p-4 bg-base-100">
-                <ReviewList reviews={filteredReviews} />
+                <ReviewList products={filteredReviews} />
               </main>
             </div>
           }
@@ -102,7 +107,7 @@ function App() {
           }
         />
       </Routes>
-    </Router>
+    </Router >
   );
 }
 
