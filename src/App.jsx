@@ -45,6 +45,7 @@ function App() {
   
       setReviews(allReviews);
       setFilteredReviews(allReviews);
+      setRefresh(true)
     } catch (error) {
       console.error('Error fetching reviews:', error);
     }
@@ -68,7 +69,7 @@ function App() {
 
   useEffect(() => {
     getReviews();
-  }, []);
+  }, [refresh]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Oops... {error.message}</div>;
