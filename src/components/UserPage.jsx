@@ -1,9 +1,9 @@
 // import { useAuth0 } from '@auth0/auth0-react';
 import PropTypes from 'prop-types';
-import AddReview from './AddReview'; 
 import { useEffect, useState } from 'react';
-import UserProfile from './UserProfile';
-import AddReview from './AddReview';
+import Profile from '../views/Profile';
+import UserReviews from '../components/UserRevies';
+
 
 function UserPage({ reviews, userId, setRefresh }) {
   // Estado para seleccionar la vista activa
@@ -17,27 +17,18 @@ function UserPage({ reviews, userId, setRefresh }) {
   }, [reviews, userId]);
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      {/* Botones de navegación centrados */}
-      <div className="flex justify-center gap-4 mb-6">
-        <button
-          onClick={() => setActiveView('profile')}
-          className={`btn ${activeView === 'profile' ? 'btn-primary' : 'btn-outline'}`}
-        >
-          User Profile
-        </button>
-        <button
-          onClick={() => setActiveView('addReview')}
-          className={`btn ${activeView === 'addReview' ? 'btn-primary' : 'btn-outline'}`}
-        >
-          Add a New Review
-        </button>
-      </div>
-
-      {/* Renderizado condicional basado en la vista activa */}
-      {activeView === 'profile' ? <UserProfile userReviews={userReviews} /> : <AddReview setRefresh={setRefresh} />}
+    <div className="p-4 max-w-screen-lg mx-auto flex">
+    {/* Sección de perfil de usuario - ocupa 1/4 del ancho con borde */}
+    <div className="w-1/4 pr-4 border border-gray-700 rounded-lg">
+      <Profile userReviews={userReviews} />
     </div>
-  );
+
+    {/* Sección de agregar reseña - ocupa el espacio restante */}
+    <div className="w-3/4 pl-4">
+      <UserReviews setRefresh={setRefresh} />
+    </div>
+  </div>
+);
 }
 
 UserPage.propTypes = {
