@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Navbar from "./components/Navbar";
 import Filters from "./components/Filters";
 import ReviewList from "./components/ReviewList";
-import UserPage from "./components/UserPage";
+import UserPage from "./views/UserPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import './App.css';
 

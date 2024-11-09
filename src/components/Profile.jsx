@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import UserReviews from '../components/UserRevies';
+import UserReviews from './UserRevies';
 
 function UserProfile() {
   const { user } = useAuth0();

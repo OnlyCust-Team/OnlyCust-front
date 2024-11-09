@@ -1,7 +1,7 @@
 // import { useAuth0 } from '@auth0/auth0-react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import Profile from '../views/Profile';
+import Profile from '../components/Profile';
 import UserReviews from '../components/UserRevies';
 
 
