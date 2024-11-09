@@ -2,56 +2,49 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-    const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
-    const navigate = useNavigate();
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const navigate = useNavigate();
 
-    const handleLogin = () => {
-        loginWithRedirect({
-            appState: { targetUrl: window.location.pathname }
-        });
-    };
+  const handleLogin = () => {
+    loginWithRedirect({
+      appState: { targetUrl: window.location.pathname },
+    });
+  };
 
-    return (
-        <div className="flex place-content-evenly">
-            <div className="navbar bg-base-100 place-content-evenly">
-                <button 
-                    className="btn btn-ghost text-xl mx-5" 
-                    onClick={() => navigate('')}
-                >
-                    Reviews
-                </button>
-                <button 
-                    className="btn btn-ghost text-xl mx-5" 
-                    onClick={() => navigate('/profile')}
-                >
-                    Mi perfil
-                </button>
-            </div>
-            <div className="navbar bg-base-100">
-                <h1 className="text-5xl font-bold">Only Cust</h1>
-            </div>
-            <div className="flex-none flex items-center gap-4">
-                {isAuthenticated ? (
-                    <>
-                        <span className="text-sm font-semibold">Hello, {user.name}</span>
-                        <button
-                            className="btn btn-ghost text-xl mx-5"
-                            onClick={() => logout({ returnTo: window.location.origin })}
-                        >
-                            Logout
-                        </button>
-                    </>
-                ) : (
-                    <button
-                        className="btn btn-ghost text-xl mx-5"
-                        onClick={handleLogin}
-                    >
-                        Login
-                    </button>
-                )}
-            </div>
-        </div>
-    );
+  return (
+    <div className="flex justify-between items-center p-4 bg-base-100">
+      <div className="flex items-center">
+        <button
+          className="btn btn-ghost text-xl"
+          onClick={() => navigate("/profile")}
+        >
+          Mi Perfil
+        </button>
+      </div>
+      <div className="flex items-center justify-center flex-grow">
+        <h1
+          className="text-5xl font-bold cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          Only Cust
+        </h1>
+      </div>
+      <div className="flex items-center gap-4">
+        {isAuthenticated ? (
+          <button
+            className="btn btn-ghost text-xl"
+            onClick={() => logout({ returnTo: window.location.origin })}
+          >
+            Logout
+          </button>
+        ) : (
+          <button className="btn btn-ghost text-xl" onClick={handleLogin}>
+            Login
+          </button>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Navbar;

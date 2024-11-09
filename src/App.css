@@ -37,10 +37,64 @@
   }
 }
 
-.card {
-  padding: 2em;
+.text-yellow-500 {
+  color: #fbbf24; /* Color amarillo */
 }
 
-.read-the-docs {
-  color: #888;
+.text-lg {
+  font-size: 1.25rem; /* Tamaño de fuente más grande */
+}
+
+.bg-blue-200 {
+  background-color: #bfdbfe; /* Color celeste */
+}
+
+.text-blue-800 {
+  color: #1e40af; /* Color azul oscuro */
+}
+
+.rounded-full {
+  border-radius: 9999px; /* Bordes redondeados */
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-0.5 {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+
+.rounded {
+  border-radius: 0.5rem; /* Bordes ligeramente redondeados */
+}
+
+.fixed {
+  position: fixed;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.bg-opacity-50 {
+  background-opacity: 0.5;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.btn {
+  width: 100%; /* Asegura que los botones ocupen todo el ancho disponible */
+}
+
+.dropdown-content {
+  width: 100%; /* Asegura que el contenido del dropdown también ocupe todo el ancho disponible */
 }

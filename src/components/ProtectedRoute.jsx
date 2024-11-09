@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, useLocation } from "react-router-dom";
 
@@ -14,9 +13,5 @@ function ProtectedRoute({ children }) {
     <Navigate to="/" replace state={{ from: location }} />
   );
 }
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired, 
-};
 
 export default ProtectedRoute;
