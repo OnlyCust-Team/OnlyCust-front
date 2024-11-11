@@ -13,10 +13,7 @@ const Filters = ({ onFilterChange }) => {
         const data = await response.json();
 
         const uniqueBrands = data
-
         setBrands(uniqueBrands);
-  
-        console.log(uniqueBrands)
       } catch (error) {
         console.error("Error fetching brands:", error);
       }

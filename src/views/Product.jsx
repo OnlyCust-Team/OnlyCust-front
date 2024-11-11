@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 function Product() {
   const { slug } = useParams();
   const [product, setProduct] = useState(null);
-
   useEffect(() => {
     const createSlug = (name) => {
       return name

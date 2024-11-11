@@ -8,6 +8,8 @@ function ProductList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
 
+  console.log(filteredProducts)
+
   const createSlug = (name) => {
     return name
       .toLowerCase()
@@ -28,7 +30,6 @@ function ProductList() {
 
       setProducts(productsWithSlug);
       setFilteredProducts(productsWithSlug);
-      console.log("Fetched Products with Slug:", productsWithSlug);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -79,6 +80,13 @@ function ProductList() {
       </div>
     );
   };
+  const timeAgo = (date) => {
+    const now = new Date();
+    const reviewDate = new Date(date);
+    const diffTime = Math.abs(now - reviewDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return `Hace ${diffDays} días`;
+  };
 
   const handleProductClick = (slug) => {
     navigate(`/${slug}`);
@@ -114,20 +122,46 @@ function ProductList() {
                 />
                 <div className="flex-1">
                   <h2 className="text-xl font-bold">{product.name}</h2>
-                  <div className="mt-2 flex items-center">
-                    <p className="mr-2 font-bold text-lg">{product.brand}</p>
-                    <button className="bg-blue-200 text-blue-800 px-6 py-0.5 rounded-full">
-                      {product.gama}
-                    </button>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    {renderStars(
-                      product.reviews.reduce(
-                        (acc, review) => acc + review.stars,
-                        0
-                      ) / product.reviews.length
-                    )}
-                    <p className="ml-2">({product.reviews.length} reviews)</p>
+                  <div className="mt-2 flex justify-evenly">
+                    <div className="mt-2 items-center">
+                      <div className="mt-2 flex items-center">
+                        <p className="mr-2 font-bold text-lg">{product.brand}</p>
+                        <button className="bg-blue-200 text-blue-800 px-6 py-0.5 rounded-full">
+                          {product.gama}
+                        </button>
+                      </div>
+                      <div className="mt-2 flex items-center">
+                        <div className="mt-2 flex items-center">
+                          {renderStars(
+                            product.reviews.reduce(
+                              (acc, review) => acc + review.stars,
+                              0
+                            ) / product.reviews.length
+                          )}
+                          <p className="ml-2">({product.reviews.length} reviews)</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card bg-base-100 w-96 shadow-xl">
+                      <div className="card-body">
+                        <p className="card-title">{<div className="flex justify-between">
+                          <div className="text-sm text-gray-500">
+                            {timeAgo(product.reviews[0].created_at)}
+                          </div>
+                        </div>}</p>
+                        <section>
+                          <p className="line-clamp-2">{product.reviews[0].review}</p>
+                          <div className="mt-2 flex items-center">
+                            {renderStars(
+                              product.reviews.reduce(
+                                (acc, review) => acc + review.stars,
+                                0
+                              ) / product.reviews.length
+                            )}
+                          </div>
+                        </section>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </li>
