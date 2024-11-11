@@ -1,96 +1,65 @@
+
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
-function ProductForm() {
+function ReviewForm({ product }) {
   const { user } = useAuth0();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "",
-    gama: "Alta",
-    brand: "",
-    price: 0,
-    image: "",
+  const [reviewData, setReviewData] = useState({
     review: "",
-    stars: 1 // Cambiar rating por stars
+    stars: 1
   });
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setReviewData({ ...reviewData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const productUrl = "http://localhost:3001/addProduct";
-    const reviewUrl = "http://localhost:3001/addReview";
+    const url = "http://localhost:3001/addReview";
 
-    const productData = {
-      name: formData.name,
-      gama: formData.gama,
-      brand: formData.brand,
-      price: formData.price,
-      image: formData.image,
-      created_at: new Date().toISOString()
-    };
-
-    const reviewData = {
-      productName: formData.name,
+    const dataToSend = {
+      productName: product.name,
       username: user.email,
-      review: formData.review,
-      stars: parseInt(formData.stars), // Asegurarse de que es un número entero
+      review: reviewData.review,
+      stars: reviewData.stars ,
       created_at: new Date().toISOString()
     };
 
     try {
-      // Enviar datos del producto
-      const productResponse = await fetch(productUrl, {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(productData)
+        body: JSON.stringify(dataToSend)
       });
 
-      if (!productResponse.ok) {
-        throw new Error("Error al enviar el producto");
-      }
-
-      const productResult = await productResponse.json();
-      console.log("Producto enviado con éxito:", productResult);
-
-      // Enviar datos de la reseña
-      const reviewResponse = await fetch(reviewUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(reviewData)
-      });
-
-      if (!reviewResponse.ok) {
+      if (!response.ok) {
         throw new Error("Error al enviar la reseña");
       }
 
-      const reviewResult = await reviewResponse.json();
-      console.log("Reseña enviada con éxito:", reviewResult);
+      const data = await response.json();
+      console.log("Reseña enviada con éxito:", data);
 
       // Mostrar mensaje de éxito
-      setSuccessMessage("Producto y reseña enviados con éxito!");
+      setSuccessMessage("Reseña enviada con éxito!");
 
       // Redirigir a la página del producto después de 2 segundos
       setTimeout(() => {
-        navigate(`/${formData.name}`);
+        navigate(`/${product.slug}`);
       }, 2000);
 
     } catch (error) {
-      console.error("Error al enviar el formulario:", error);
+      console.error("Error al enviar la reseña:", error);
     }
   };
 
   return (
-    <form className="bg-white p-4 rounded shadow-md">
+    <div className="bg-base-200 p-4 rounded-lg shadow-md max-w-md mx-auto">
       {successMessage && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-success">
@@ -98,89 +67,38 @@ function ProductForm() {
           </div>
         </div>
       )}
-      <h2 className="text-2xl font-bold mb-4">Nuevo Producto</h2>
-      <div className="mb-4">
-        <label className="block text-gray-700">Nombre del producto</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Gama</label>
-        <select
-          name="gama"
-          value={formData.gama}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        >
-          <option value="Alta">Alta</option>
-          <option value="Media">Media</option>
-          <option value="Baja">Baja</option>
-        </select>
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Marca</label>
-        <input
-          type="text"
-          name="brand"
-          value={formData.brand}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Precio</label>
-        <input
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">URL de la imagen</label>
-        <input
-          type="text"
-          name="image"
-          value={formData.image}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Calificación</label>
-        <select
-          name="stars" // Cambiado a stars
-          value={formData.stars} // Cambiado a stars
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        >
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-        </select>
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Reseña completa</label>
-        <textarea
-          name="review"
-          value={formData.review}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-        Enviar
-      </button>
-    </form>
+      <h2 className="text-2xl font-bold mb-4">{product.name}</h2>
+      <p className="text-gray-700">{product.description}</p>
+      <form onSubmit={handleSubmit} className="mt-4">
+        <div className="mb-4">
+        <label className="block text-gray-400">Reseña Completa</label>
+          <textarea
+            name="review"
+            value={reviewData.review}
+            onChange={handleChange}
+             className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+                   <div className="mb-4">
+                   <label className="block text-gray-400">Calificación</label>
+          <select
+            name="stars"
+            value={reviewData.stars }
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+          >
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+          </select>
+        </div>
+        <button type="submit"  className="btn btn-primary w-3/4 mx-auto mt-4">
+          Enviar
+        </button>
+      </form>
+    </div>
   );
 }
-
-export default ProductForm;
+export default ReviewForm;

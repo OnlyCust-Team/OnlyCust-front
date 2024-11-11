@@ -12,7 +12,7 @@ function ProductForm() {
     price: 0,
     image: "",
     review: "",
-    stars : 1
+    stars: 1
   });
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -90,7 +90,7 @@ function ProductForm() {
   };
 
   return (
-    <div className="bg-white p-4 rounded shadow-md">
+    <div className="bg-base-200 p-4 rounded-lg shadow-md max-w-md mx-auto">
       {successMessage && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-success">
@@ -98,91 +98,94 @@ function ProductForm() {
           </div>
         </div>
       )}
-      <h2 className="text-2xl font-bold mb-4">Nuevo Producto</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700">Nombre del producto</label>
+      <h2 className="text-2xl font-bold mb-4 text-center">Nuevo Producto</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+        <label className="block text-gray-400">Nombre del producto</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Gama</label>
+        <div>
+        <label className="block text-gray-400">Gama</label>
           <select
             name="gama"
             value={formData.gama}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="Alta">Alta</option>
             <option value="Media">Media</option>
             <option value="Baja">Baja</option>
           </select>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Marca</label>
+        <div>
+        <label className="block text-gray-400">Marca</label>
           <input
             type="text"
             name="brand"
             value={formData.brand}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+             className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Precio</label>
+        <div>
+        <label className="block text-gray-400">Precio</label>
           <input
             type="number"
             name="price"
             value={formData.price}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">URL de la imagen</label>
+        <div>
+        <label className="block text-gray-400">URL de la imagen</label>
           <input
             type="text"
             name="image"
             value={formData.image}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Calificación</label>
+        <div>
+        <label className="block text-gray-400">Calificación</label>
           <select
-            name="stars "
-            value={formData.stars }
+            name="stars"
+            value={formData.stars}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
-            <option value={5}>5</option>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <option key={star} value={star}>
+                {star}
+              </option>
+            ))}
           </select>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Reseña completa</label>
+        <div>
+        <label className="block text-gray-400">Reseña completa</label>
           <textarea
             name="review"
             value={formData.review}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        <button
+          type="submit"
+          className="btn btn-primary w-3/4 mx-auto mt-4"
+        >
           Enviar
         </button>
       </form>
     </div>
   );
-}
+}  
 
 export default ProductForm;
