@@ -6,6 +6,7 @@ import UserPage from "./views/UserPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./views/Home";
 import Product from "./views/Product";
+import AllReviews from "./views/AllReviews"; // Asegúrate de importar el nuevo componente
 import "./App.css";
 
 function App() {
@@ -27,13 +28,14 @@ function App() {
           element={
             <>
               <ProtectedRoute>
-              <main className="flex-1 p-4 bg-base-100">
-                <UserPage />
-              </main>
+                <main className="flex-1 p-4 bg-base-100">
+                  <UserPage />
+                </main>
               </ProtectedRoute>
             </>
           }
         />
+        <Route path="/allreviews" element={<AllReviews />} /> {/* Nueva ruta */}
       </Routes>
     </Router>
   );

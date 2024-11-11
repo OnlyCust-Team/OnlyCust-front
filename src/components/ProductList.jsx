@@ -2,11 +2,15 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import Filters from "./Filters";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 function ProductList() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+
 
   const createSlug = (name) => {
     return name
@@ -84,6 +88,16 @@ function ProductList() {
     navigate(`/${slug}`);
   };
 
+  const handleAddProductClick = () => {
+    if (isAuthenticated) {
+      navigate('/allreviews', { state: { action: 'newProduct' } });
+    } else {
+      alert("Para añadir un nuevo producto, por favor inicia sesión.");
+      loginWithRedirect();
+    }
+  };
+
+
   return (
     <div className="flex">
       <aside className="w-1/4 p-4 bg-base-200">
@@ -95,10 +109,11 @@ function ProductList() {
             <h2 className="text-2xl font-bold">Productos</h2>
             <button
               className="bg-lime-500 text-white px-4 py-2 rounded"
-              onClick={() => console.log("Añadir nuevo producto")}
+              onClick={handleAddProductClick}
             >
               Nuevo Producto
             </button>
+
           </div>
           <ul>
             {filteredProducts.map((product, index) => (

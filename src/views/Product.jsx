@@ -1,9 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Product() {
   const { slug } = useParams();
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0(); // Añadir isAuthenticated aquí
   const [product, setProduct] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const createSlug = (name) => {
@@ -25,8 +28,8 @@ function Product() {
         const foundProduct = productsWithSlug.find((item) => item.slug === slug);
 
         setProduct(foundProduct);
-  
-        console.log(foundProduct)
+
+        console.log(foundProduct);
       } catch (error) {
         console.error("Error fetching brands:", error);
       }
@@ -64,6 +67,15 @@ function Product() {
     return `Hace ${diffDays} días`;
   };
 
+  const handleAddReviewClick = () => {
+    if (isAuthenticated) {
+      navigate('/allreviews', { state: { action: 'addReview', product } });
+    } else {
+      alert("Para añadir una review, por favor inicia sesión.");
+      loginWithRedirect();
+    }
+  };
+
   return (
     <div className="flex p-4">
       <div className="w-1/4">
@@ -81,13 +93,22 @@ function Product() {
         <div className="mt-2 flex items-center">
           {renderStars(
             product.reviews.reduce((acc, review) => acc + review.stars, 0) /
-              product.reviews.length
+            product.reviews.length
           )}
           <p className="ml-2">({product.reviews.length} reviews)</p>
         </div>
       </div>
       <div className="flex-1 ml-4">
-        <h2 className="text-xl font-bold mb-4">Reviews</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-bold">Reviews</h2>
+          <button
+            className="px-4 py-2 bg-blue-500 text-white rounded"
+            onClick={handleAddReviewClick}
+          >
+            Añadir tu review
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 gap-4">
           {product.reviews.map((review) => (
             <div key={review._id} className="card bg-base-100 shadow-xl p-4">
