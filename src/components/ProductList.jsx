@@ -150,7 +150,9 @@ function ProductList() {
                           </div>
                         </div>}</p>
                         <section>
-                          <p className="line-clamp-2">{product.reviews[0].review}</p>
+                          <div className="flex-1 mx-4 max-h-20 overflow-y-auto">
+                            {product.reviews[0].review}
+                          </div>
                           <div className="mt-2 flex items-center">
                             {renderStars(
                               product.reviews.reduce(
