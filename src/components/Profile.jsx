@@ -1,11 +1,12 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import UserReviews from './UserRevies';
+import UserReviews from './UserReviews';
 
 function UserProfile() {
   const { user } = useAuth0();
 
+  console.log(user.email)
+
   const registrationDate = user && new Date(user.created_at).toLocaleDateString();
-  console.log(registrationDate);
   const reviewCount = UserReviews.length;
 
   return (

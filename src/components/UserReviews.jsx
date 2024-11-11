@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function UserReviews({ userReviews = [] }) {
   const [openModalId, setOpenModalId] = useState(null);
