@@ -2,8 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Navbar from "./components/Navbar";
-import Filters from "./components/Filters";
-import ReviewList from "./components/ReviewList";
 import UserPage from "./views/UserPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./views/Home";
@@ -28,11 +26,11 @@ function App() {
           path="/profile"
           element={
             <>
-              {/* <ProtectedRoute> */}
+              <ProtectedRoute>
               <main className="flex-1 p-4 bg-base-100">
                 <UserPage />
               </main>
-              {/* </ProtectedRoute> */}
+              </ProtectedRoute>
             </>
           }
         />

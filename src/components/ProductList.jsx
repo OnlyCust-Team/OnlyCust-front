@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import sample from "../sample.json";
 import "../App.css";
 import Filters from "./Filters";
 
@@ -9,11 +8,31 @@ function ProductList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
 
-  const getProductSample = () => {
-    const data = sample;
-    setProducts(data);
-    setFilteredProducts(data);
+  const createSlug = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
   };
+
+  const fetchProducts = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:3001/review");
+      const data = await response.json();
+
+      const productsWithSlug = data.map((product) => ({
+        ...product,
+        slug: createSlug(product.name),
+      }));
+
+      setProducts(productsWithSlug);
+      setFilteredProducts(productsWithSlug);
+      console.log("Fetched Products with Slug:", productsWithSlug);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  }, []);
 
   const handleFilterChange = (filterValues) => {
     const { selectedBrand, selectedGama, selectedStar } = filterValues;
@@ -40,8 +59,8 @@ function ProductList() {
   };
 
   useEffect(() => {
-    getProductSample();
-  }, []);
+    fetchProducts();
+  }, [fetchProducts]);
 
   const renderStars = (rating) => {
     const fullStars = Math.round(rating);

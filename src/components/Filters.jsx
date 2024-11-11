@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import sample from "../sample.json"; // Asegúrate de que la ruta sea correcta
 
 const Filters = ({ onFilterChange }) => {
   const [brands, setBrands] = useState([]);
@@ -8,20 +7,21 @@ const Filters = ({ onFilterChange }) => {
   const [selectedStar, setSelectedStar] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchBrands = async () => {
       try {
-        // Usamos los datos del sample.json directamente
-        const data = sample;
+        const response = await fetch("http://localhost:3001/brands");
+        const data = await response.json();
 
-        const uniqueBrands = [...new Set(data.map((item) => item.brand))];
+        const uniqueBrands = data
 
         setBrands(uniqueBrands);
+  
+        console.log(uniqueBrands)
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching brands:", error);
       }
     };
-
-    fetchData();
+    fetchBrands();
   }, []);
 
   useEffect(() => {

@@ -6,13 +6,9 @@ const AddReview = () => {
   const [gama, setGama] = useState("");
   const [price, setPrice] = useState("");
   const [stars, setStars] = useState(0);
-  const [images, setImages] = useState(null);
   const [review, setReview] = useState("");
   const [username, setUsername] = useState("");
-
-  const handleImageChange = (e) => {
-    setImages(e.target.files[0]);
-  };
+  const [image, setImage] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,31 +20,14 @@ const AddReview = () => {
       stars,
       review,
       username,
-      image: images ? URL.createObjectURL(images) : null,
+      image: image ? URL.createObjectURL(image) : null,
     };
 
     try {
-      // Leer el archivo sample.json
       const response = await fetch("/src/sample.json");
       const reviews = await response.json();
 
-      // Agregar el nuevo review
       reviews.push(newReview);
-
-      // Escribir el archivo actualizado
-      const fileHandle = await window.showSaveFilePicker({
-        suggestedName: "sample.json",
-        types: [
-          {
-            description: "JSON Files",
-            accept: { "application/json": [".json"] },
-          },
-        ],
-      });
-
-      const writableStream = await fileHandle.createWritable();
-      await writableStream.write(JSON.stringify(reviews, null, 2));
-      await writableStream.close();
 
       alert("Review added successfully");
       setName("");
@@ -112,9 +91,11 @@ const AddReview = () => {
             <span className="label-text">Imagen</span>
           </div>
           <input
-            type="file"
-            className="file-input w-full max-w-xs"
-            onChange={handleImageChange}
+            type="text"
+            placeholder="Img Url"
+            className="input input-bordered w-full max-w-xs"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
           />
         </label>
 

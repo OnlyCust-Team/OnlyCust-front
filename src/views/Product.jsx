@@ -1,18 +1,41 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import sample from "../sample.json";
 
 function Product() {
   const { slug } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const productData = sample.find((item) => item.slug === slug);
-    setProduct(productData);
+    const createSlug = (name) => {
+      return name
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-');
+    };
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/review");
+        const data = await response.json();
+        const productsWithSlug = data.map((product) => ({
+          ...product,
+          slug: createSlug(product.name),
+        }));
+
+        const foundProduct = productsWithSlug.find((item) => item.slug === slug);
+
+        setProduct(foundProduct);
+  
+        console.log(foundProduct)
+      } catch (error) {
+        console.error("Error fetching brands:", error);
+      }
+    };
+    fetchProduct();
   }, [slug]);
 
   if (!product) {
-    return <p>Loading...</p>;
+    return <p>Product not found</p>;
   }
 
   const renderStars = (rating) => {
