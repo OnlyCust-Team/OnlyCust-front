@@ -63,12 +63,16 @@ const Filters = ({ onFilterChange }) => {
 
   return (
     <div>
-      <h2 className="font-bold text-3xl text-left">Filters</h2>
-
+      <h2 className="font-bold text-3xl text-left text-white">Filters</h2>
+  
       <div className="my-4">
         <div className="flex items-center">
           <div className="dropdown dropdown-hover flex-1">
-            <div tabIndex={0} role="button" className="btn m-1 w-full">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn m-1 w-full bg-blue-500 text-black"
+            >
               {selectedBrand || "Select a brand"}
             </div>
             <ul
@@ -84,11 +88,15 @@ const Filters = ({ onFilterChange }) => {
           </div>
         </div>
       </div>
-
+  
       <div className="my-4">
         <div className="flex items-center">
           <div className="dropdown dropdown-hover flex-1">
-            <div tabIndex={0} role="button" className="btn m-1 w-full">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn m-1 w-full bg-blue-500 text-black"
+            >
               {selectedGama || "Select a gama"}
             </div>
             <ul
@@ -104,11 +112,15 @@ const Filters = ({ onFilterChange }) => {
           </div>
         </div>
       </div>
-
+  
       <div className="my-4">
         <div className="flex items-center">
           <div className="dropdown dropdown-hover flex-1">
-            <div tabIndex={0} role="button" className="btn m-1 w-full">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn m-1 w-full bg-blue-500 text-black"
+            >
               {selectedStar
                 ? `${selectedStar} Star${selectedStar > 1 ? "s" : ""}`
                 : "Select stars"}
@@ -126,14 +138,14 @@ const Filters = ({ onFilterChange }) => {
           </div>
         </div>
       </div>
-
+  
       <div className="my-4">
-        <button className="btn btn-secondary w-full" onClick={resetFilters}>
+        <button className="btn bg-blue-500 text-black w-full" onClick={resetFilters}>
           Reset Filters
         </button>
       </div>
     </div>
   );
-};
+}  
 
 export default Filters;

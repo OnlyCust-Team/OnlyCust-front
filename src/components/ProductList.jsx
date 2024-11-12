@@ -100,26 +100,29 @@ function ProductList() {
 
   return (
     <div className="flex">
-      <aside className="w-1/4 p-4 bg-base-200">
+      {/* Filtro con margen derecho */}
+      <aside className="w-1/4 p-4 bg-black border rounded border-silver mr-4">
         <Filters onFilterChange={handleFilterChange} />
       </aside>
-      <main className="flex-1 p-4 bg-base-100">
-        <div className="border p-4 rounded bg-white">
+  
+      {/* Contenido principal */}
+      <main className="flex-1 p-0 bg-base-100">
+        <div className="border-silver border-2 p-4 rounded bg-black">
           <div className="mb-4 flex justify-between items-center">
-            <h2 className="text-2xl font-bold">Productos</h2>
+            <h2 className="text-2xl font-bold text-white">Productos</h2>
             <button
-              className="bg-lime-500 text-white px-4 py-2 rounded"
+              className="bg-blue-500 text-black px-4 py-2 rounded"
               onClick={handleAddProductClick}
             >
               Nuevo Producto
             </button>
-
           </div>
+  
           <ul>
             {filteredProducts.map((product, index) => (
               <li
                 key={index}
-                className="mb-4 p-4 border rounded flex cursor-pointer"
+                className="mb-4 p-4 border rounded flex cursor-pointer bg-gray-200" // Fondo plomizo suave para cada review
                 onClick={() => handleProductClick(product.slug)}
               >
                 <img
@@ -128,14 +131,14 @@ function ProductList() {
                   className="w-1/4 h-auto mr-4 rounded"
                 />
                 <div className="flex-1">
-                  <h2 className="text-xl font-bold">{product.name}</h2>
+                  <h2 className="text-xl font-bold text-gray-800">{product.name}</h2>
                   <div className="mt-2 flex items-center">
-                    <p className="mr-2 font-bold text-lg">{product.brand}</p>
+                    <p className="mr-2 font-bold text-lg text-gray-700">{product.brand}</p>
                     <button className="bg-blue-200 text-blue-800 px-6 py-0.5 rounded-full">
                       {product.gama}
                     </button>
                   </div>
-                  <div className="mt-2 flex items-center">
+                  <div className="mt-2 flex items-center text-gray-700">
                     {renderStars(
                       product.reviews.reduce(
                         (acc, review) => acc + review.stars,
@@ -152,6 +155,6 @@ function ProductList() {
       </main>
     </div>
   );
+  
 }
-
 export default ProductList;
