@@ -77,8 +77,8 @@ function Product() {
   };
 
   return (
-    <div className="flex p-4">
-      <div className="w-1/4">
+    <div className="flex  p-4 mt-4">
+      <div className="w-1/4 bg-black border rounded border-silver ">
         <img
           src={product.image}
           alt={product.name}
@@ -111,7 +111,7 @@ function Product() {
 
         <div className="grid grid-cols-1 gap-4">
           {product.reviews.map((review) => (
-            <div key={review._id} className="card bg-base-100 shadow-xl p-4">
+            <div key={review._id} className="card bg-black border rounded border-silver p-4">
               <div className="flex justify-between">
                 <div className="text-sm text-gray-500">
                   {timeAgo(review.created_at)}

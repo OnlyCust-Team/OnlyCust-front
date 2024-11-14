@@ -99,7 +99,7 @@ function ProductList() {
 
 
   return (
-    <div className="flex">
+    <div className="flex mt-8">
       {/* Filtro con margen derecho */}
       <aside className="w-1/4 p-4 bg-black border rounded border-silver mr-4">
         <Filters onFilterChange={handleFilterChange} />
