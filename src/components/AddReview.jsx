@@ -8,7 +8,7 @@ const AddReview = () => {
   const [stars, setStars] = useState(0);
   const [review, setReview] = useState("");
   const [username, setUsername] = useState("");
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -12,7 +12,7 @@ function ProductForm() {
     price: 0,
     image: "",
     review: "",
-    stars: 1
+    stars: 1,
   });
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -32,15 +32,15 @@ function ProductForm() {
       brand: formData.brand,
       price: formData.price,
       image: formData.image,
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
     };
 
     const reviewData = {
       productName: formData.name,
       username: user.email,
       review: formData.review,
-      stars: formData.stars ,
-      created_at: new Date().toISOString()
+      stars: formData.stars,
+      created_at: new Date().toISOString(),
     };
 
     try {
@@ -48,9 +48,9 @@ function ProductForm() {
       const productResponse = await fetch(productUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(productData)
+        body: JSON.stringify(productData),
       });
 
       if (!productResponse.ok) {
@@ -64,9 +64,9 @@ function ProductForm() {
       const reviewResponse = await fetch(reviewUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(reviewData)
+        body: JSON.stringify(reviewData),
       });
 
       if (!reviewResponse.ok) {
@@ -83,14 +83,13 @@ function ProductForm() {
       setTimeout(() => {
         navigate(`/${formData.name}`);
       }, 2000);
-
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
   };
 
   return (
-    <div className="bg-base-200 p-4 rounded-lg shadow-md max-w-md mx-auto">
+    <div className="bg-gray-800 p-4 rounded-lg shadow-md max-w-md mx-auto">
       {successMessage && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-success">
@@ -98,25 +97,27 @@ function ProductForm() {
           </div>
         </div>
       )}
-      <h2 className="text-2xl font-bold mb-4 text-center">Nuevo Producto</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center text-white">
+        Nuevo Producto
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-        <label className="block text-gray-400">Nombre del producto</label>
+          <label className="block text-white">Nombre del producto</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border border-gray-800 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         <div>
-        <label className="block text-gray-400">Gama</label>
+          <label className="block text-white">Gama</label>
           <select
             name="gama"
             value={formData.gama}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border border-gray-800 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="Alta">Alta</option>
             <option value="Media">Media</option>
@@ -124,42 +125,42 @@ function ProductForm() {
           </select>
         </div>
         <div>
-        <label className="block text-gray-400">Marca</label>
+          <label className="block text-white">Marca</label>
           <input
             type="text"
             name="brand"
             value={formData.brand}
             onChange={handleChange}
-             className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border border-gray-800 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         <div>
-        <label className="block text-gray-400">Precio</label>
+          <label className="block text-white">Precio</label>
           <input
             type="number"
             name="price"
             value={formData.price}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border border-gray-800 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         <div>
-        <label className="block text-gray-400">URL de la imagen</label>
+          <label className="block text-white">URL de la imagen</label>
           <input
             type="text"
             name="image"
             value={formData.image}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border border-gray-800 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         <div>
-        <label className="block text-gray-400">Calificación</label>
+          <label className="block text-white">Calificación</label>
           <select
             name="stars"
             value={formData.stars}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border border-gray-800 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             {[1, 2, 3, 4, 5].map((star) => (
               <option key={star} value={star}>
@@ -169,23 +170,23 @@ function ProductForm() {
           </select>
         </div>
         <div>
-        <label className="block text-gray-400">Reseña completa</label>
+          <label className="block text-white">Reseña completa</label>
           <textarea
             name="review"
             value={formData.review}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border border-gray-800 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         <button
           type="submit"
-          className="btn btn-primary w-3/4 mx-auto mt-4"
+          className="btn btn-primary w-3/4 mx-auto mt-4 text-white"
         >
           Enviar
         </button>
       </form>
     </div>
   );
-}  
+}
 
 export default ProductForm;

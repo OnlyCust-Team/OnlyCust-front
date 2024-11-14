@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ function ReviewForm({ product }) {
   const navigate = useNavigate();
   const [reviewData, setReviewData] = useState({
     review: "",
-    stars: 1
+    stars: 1,
   });
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -25,17 +24,17 @@ function ReviewForm({ product }) {
       productName: product.name,
       username: user.email,
       review: reviewData.review,
-      stars: reviewData.stars ,
-      created_at: new Date().toISOString()
+      stars: reviewData.stars,
+      created_at: new Date().toISOString(),
     };
 
     try {
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(dataToSend)
+        body: JSON.stringify(dataToSend),
       });
 
       if (!response.ok) {
@@ -52,14 +51,13 @@ function ReviewForm({ product }) {
       setTimeout(() => {
         navigate(`/${product.slug}`);
       }, 2000);
-
     } catch (error) {
       console.error("Error al enviar la reseña:", error);
     }
   };
 
   return (
-    <div className="bg-base-200 p-4 rounded-lg shadow-md max-w-md mx-auto">
+    <div className="bg-gray-800 p-4 rounded-lg shadow-md max-w-md mx-auto">
       {successMessage && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-success">
@@ -67,25 +65,29 @@ function ReviewForm({ product }) {
           </div>
         </div>
       )}
-      <h2 className="text-2xl font-bold mb-4">{product.name}</h2>
-      <p className="text-gray-700">{product.description}</p>
-      <form onSubmit={handleSubmit} className="mt-4">
+      <h2 className="text-2xl font-bold mb-4 text-white text-center">
+        {product.name}
+      </h2>
+      <p className="text-gray-300 text-center">{product.description}</p>
+      <form onSubmit={handleSubmit} className="mt-4 space-y-4">
         <div className="mb-4">
-        <label className="block text-gray-400">Reseña Completa</label>
+          <label className="block text-white text-center">
+            Reseña Completa
+          </label>
           <textarea
             name="review"
             value={reviewData.review}
             onChange={handleChange}
-             className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-                   <div className="mb-4">
-                   <label className="block text-gray-400">Calificación</label>
+        <div className="mb-4">
+          <label className="block text-white text-center">Calificación</label>
           <select
             name="stars"
-            value={reviewData.stars }
+            value={reviewData.stars}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded text-center"
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -94,11 +96,14 @@ function ReviewForm({ product }) {
             <option value={5}>5</option>
           </select>
         </div>
-        <button type="submit"  className="btn btn-primary w-3/4 mx-auto mt-4">
-          Enviar
-        </button>
+        <div className="flex justify-center">
+          <button type="submit" className="btn btn-primary w-3/4 mt-4">
+            Enviar
+          </button>
+        </div>
       </form>
     </div>
   );
 }
+
 export default ReviewForm;
