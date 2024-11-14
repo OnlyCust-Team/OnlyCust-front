@@ -15,7 +15,7 @@ const Navbar = () => {
     <div className="flex justify-between items-center p-4 bg-base-100">
       <div className="flex items-center">
         <button
-          className="btn btn-ghost text-xl"
+          className="text-2xl font-bold text-black"
           onClick={() => navigate("/profile")}
         >
           Mi Perfil
@@ -23,7 +23,7 @@ const Navbar = () => {
       </div>
       <div className="flex items-center justify-center flex-grow">
         <h1
-          className="text-5xl font-bold cursor-pointer"
+          className="text-5xl font-bold text-black"
           onClick={() => navigate("/")}
         >
           Only Cust
@@ -38,7 +38,10 @@ const Navbar = () => {
             Logout
           </button>
         ) : (
-          <button className="btn btn-ghost text-xl" onClick={handleLogin}>
+          <button
+            className="text-2xl font-bold text-black"
+            onClick={handleLogin}
+          >
             Login
           </button>
         )}

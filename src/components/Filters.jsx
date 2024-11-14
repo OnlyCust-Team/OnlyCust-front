@@ -12,11 +12,11 @@ const Filters = ({ onFilterChange }) => {
         const response = await fetch("http://localhost:3001/brands");
         const data = await response.json();
 
-        const uniqueBrands = data
+        const uniqueBrands = data;
 
         setBrands(uniqueBrands);
-  
-        console.log(uniqueBrands)
+
+        console.log(uniqueBrands);
       } catch (error) {
         console.error("Error fetching brands:", error);
       }
@@ -62,90 +62,93 @@ const Filters = ({ onFilterChange }) => {
   };
 
   return (
-    <div>
-      <h2 className="font-bold text-3xl text-left text-white">Filters</h2>
-  
+    <div className="bg-gray-800 p-4 rounded">
+      {" "}
+      <h2 className="text-2xl font-bold text-white">Filtros</h2>
       <div className="my-4">
         <div className="flex items-center">
           <div className="dropdown dropdown-hover flex-1">
             <div
               tabIndex={0}
               role="button"
-              className="btn m-1 w-full bg-blue-500 text-black"
+              className="btn m-1 w-full bg-blue-500 text-white border-none"
             >
-              {selectedBrand || "Select a brand"}
+              {selectedBrand || "Marca"}
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+              className="dropdown-content menu bg-gray-800 rounded-box z-[1] w-52 p-2 shadow"
             >
               {brands.map((brand) => (
                 <li key={brand} onClick={() => handleBrandChange(brand)}>
-                  <a>{brand}</a>
+                  <a className="text-white">{brand}</a>
                 </li>
               ))}
             </ul>
           </div>
         </div>
       </div>
-  
       <div className="my-4">
         <div className="flex items-center">
           <div className="dropdown dropdown-hover flex-1">
             <div
               tabIndex={0}
               role="button"
-              className="btn m-1 w-full bg-blue-500 text-black"
+              className="btn m-1 w-full bg-blue-500 text-white border-none"
             >
-              {selectedGama || "Select a gama"}
+              {selectedGama || "Gama"}
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+              className="dropdown-content menu bg-gray-800 rounded-box z-[1] w-52 p-2 shadow"
             >
               {["Baja", "Media", "Alta"].map((gama) => (
                 <li key={gama} onClick={() => handleGamaChange(gama)}>
-                  <a>{gama}</a>
+                  <a className="text-white">{gama}</a>
                 </li>
               ))}
             </ul>
           </div>
         </div>
       </div>
-  
       <div className="my-4">
         <div className="flex items-center">
           <div className="dropdown dropdown-hover flex-1">
             <div
               tabIndex={0}
               role="button"
-              className="btn m-1 w-full bg-blue-500 text-black"
+              className="btn m-1 w-full bg-blue-500 text-white border-none"
             >
               {selectedStar
                 ? `${selectedStar} Star${selectedStar > 1 ? "s" : ""}`
-                : "Select stars"}
+                : "Estrellas"}
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+              className="dropdown-content menu bg-gray-800 rounded-box z-[1] w-52 p-2 shadow"
             >
               {[1, 2, 3, 4, 5].map((star) => (
                 <li key={star} onClick={() => handleStarChange(star)}>
-                  <a>{`${star} Star${star > 1 ? "s" : ""}`}</a>
+                  <a className="text-white">{`${star} Estrella${
+                    star > 1 ? "s" : ""
+                  }`}</a>{" "}
                 </li>
               ))}
             </ul>
           </div>
         </div>
       </div>
-  
       <div className="my-4">
-        <button className="btn bg-blue-500 text-black w-full" onClick={resetFilters}>
-          Reset Filters
+        <button
+          className="btn bg-blue-500 text-white w-full border-none"
+          onClick={resetFilters}
+        >
+          {" "}
+          Resetear Filtros
         </button>
       </div>
     </div>
   );
-}  
+};
 
 export default Filters;

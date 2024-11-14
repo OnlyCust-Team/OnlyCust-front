@@ -12,9 +12,9 @@ function Product() {
     const createSlug = (name) => {
       return name
         .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/[^a-z0-9\s-]/g, "")
         .trim()
-        .replace(/\s+/g, '-');
+        .replace(/\s+/g, "-");
     };
     const fetchProduct = async () => {
       try {
@@ -25,7 +25,9 @@ function Product() {
           slug: createSlug(product.name),
         }));
 
-        const foundProduct = productsWithSlug.find((item) => item.slug === slug);
+        const foundProduct = productsWithSlug.find(
+          (item) => item.slug === slug
+        );
 
         setProduct(foundProduct);
 
@@ -69,7 +71,7 @@ function Product() {
 
   const handleAddReviewClick = () => {
     if (isAuthenticated) {
-      navigate('/allreviews', { state: { action: 'addReview', product } });
+      navigate("/allreviews", { state: { action: "addReview", product } });
     } else {
       alert("Para añadir una review, por favor inicia sesión.");
       loginWithRedirect();
@@ -77,8 +79,8 @@ function Product() {
   };
 
   return (
-    <div className="flex  p-4 mt-4">
-      <div className="w-1/4 bg-black border rounded border-silver ">
+    <div className="flex p-4 mt-4">
+      <div className="w-1/4 p-2 bg-white border rounded border-silver">
         <img
           src={product.image}
           alt={product.name}
@@ -93,25 +95,28 @@ function Product() {
         <div className="mt-2 flex items-center">
           {renderStars(
             product.reviews.reduce((acc, review) => acc + review.stars, 0) /
-            product.reviews.length
+              product.reviews.length
           )}
           <p className="ml-2">({product.reviews.length} reviews)</p>
         </div>
       </div>
-      <div className="flex-1 ml-4">
+      <div className="flex-1 ml-4 border bg-gray-800 mx-4  p-4 rounded">
+        {" "}
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold">Reviews</h2>
+          <h2 className="text-2xl font-bold text-white">Reviews</h2>
           <button
-            className="px-4 py-2 bg-blue-500 text-white rounded"
+            className="px-4 py-2 bg-blue-500 text-white rounded my-4 p-4"
             onClick={handleAddReviewClick}
           >
             Añadir tu review
           </button>
         </div>
-
         <div className="grid grid-cols-1 gap-4">
           {product.reviews.map((review) => (
-            <div key={review._id} className="card bg-black border rounded border-silver p-4">
+            <div
+              key={review._id}
+              className="card bg-white border rounded border-silver p-4"
+            >
               <div className="flex justify-between">
                 <div className="text-sm text-gray-500">
                   {timeAgo(review.created_at)}
