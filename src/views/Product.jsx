@@ -8,6 +8,8 @@ function Product() {
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
 
+  const fixedSlug = slug.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-');
+
   useEffect(() => {
     const createSlug = (name) => {
       return name
@@ -25,7 +27,8 @@ function Product() {
           slug: createSlug(product.name),
         }));
 
-        const foundProduct = productsWithSlug.find((item) => item.slug === slug);
+
+        const foundProduct = productsWithSlug.find((item) => item.slug === fixedSlug);
 
         setProduct(foundProduct);
 
