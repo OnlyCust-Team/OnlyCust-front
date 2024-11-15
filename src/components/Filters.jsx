@@ -1,110 +1,151 @@
 import { useEffect, useState } from "react";
-import PropTypes from 'prop-types';
 
-const Filters = ({ onFilterChange, minPrice, maxPrice }) => {
-  const [brands, setBrands] = useState([]);  
-  const [selectedBrand, setSelectedBrand] = useState("");  
+const Filters = ({ onFilterChange }) => {
+  const [brands, setBrands] = useState([]);
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedGama, setSelectedGama] = useState("");
   const [selectedStar, setSelectedStar] = useState("");
-  const [priceRange, setPriceRange] = useState([0,0]);
 
   useEffect(() => {
-    setPriceRange([minPrice, maxPrice]);
-    const fetchBrands = async () => {  
+    const fetchBrands = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/stores`); 
+        const response = await fetch("http://localhost:3001/brands");
         const data = await response.json();
-        setBrands(data);
+
+        const uniqueBrands = data
+
+        setBrands(uniqueBrands);
+  
+        console.log(uniqueBrands)
       } catch (error) {
-        console.error("Error fetching brands:", error);  
+        console.error("Error fetching brands:", error);
       }
     };
-
     fetchBrands();
-  }, [minPrice, maxPrice]);
+  }, []);
 
-  const updateFilters = () => {
-    onFilterChange({ priceRange, selectedBrand, selectedStar }); 
+  useEffect(() => {
+    onFilterChange({ selectedBrand, selectedGama, selectedStar });
+  }, [selectedBrand, selectedGama, selectedStar, onFilterChange]);
+
+  const handleBrandChange = (brand) => {
+    setSelectedBrand(brand);
+    closeDropdowns();
   };
 
-  useEffect(updateFilters, [priceRange, selectedBrand, selectedStar, onFilterChange]);
+  const handleGamaChange = (gama) => {
+    setSelectedGama(gama);
+    closeDropdowns();
+  };
 
-  const handleBrandChange = (brand) => setSelectedBrand(brand); 
-  const handleStarChange = (star) => setSelectedStar(star);
-  const handlePriceChange = (e) => {
-    const newRange = [...priceRange];
-    newRange[e.target.dataset.index] = Number(e.target.value);
-    if (newRange[0] <= newRange[1]) setPriceRange(newRange);
+  const handleStarChange = (star) => {
+    setSelectedStar(star);
+    closeDropdowns();
+  };
+
+  const resetFilters = () => {
+    setSelectedBrand("");
+    setSelectedGama("");
+    setSelectedStar("");
+  };
+
+  const closeDropdowns = () => {
+    const dropdowns = document.querySelectorAll(".dropdown-content");
+    dropdowns.forEach((dropdown) => {
+      dropdown.style.display = "none";
+    });
+    setTimeout(() => {
+      dropdowns.forEach((dropdown) => {
+        dropdown.style.display = "";
+      });
+    }, 100);
   };
 
   return (
     <div>
-      <h2 className="font-bold text-3xl text-left">Filters</h2>
-
+      <h2 className="font-bold text-3xl text-left text-white">Filters</h2>
+  
       <div className="my-4">
         <div className="flex items-center">
-          <div className="dropdown dropdown-hover flex-1" aria-label="Brand Filter">
-            <div tabIndex={0} role="button" className="btn m-1">
+          <div className="dropdown dropdown-hover flex-1">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn m-1 w-full bg-blue-500 text-black"
+            >
               {selectedBrand || "Select a brand"}
             </div>
-            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-              {brands.length ? brands.map((brand) => (  
-                <li key={brand} onClick={() => handleBrandChange(brand)}> 
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
+              {brands.map((brand) => (
+                <li key={brand} onClick={() => handleBrandChange(brand)}>
                   <a>{brand}</a>
-                </li>
-              )) : <li>No brands available</li>} 
-            </ul>
-          </div>
-          <button className="btn btn-primary m-1" onClick={() => setSelectedBrand("")}>Clear</button>
-        </div>
-      </div>
-
-      <div className="my-4">
-        <div className="flex items-center">
-          <div className="dropdown dropdown-hover flex-1" aria-label="Star Rating Filter">
-            <div tabIndex={0} role="button" className="btn m-1">
-              {selectedStar ? `${selectedStar} Star${selectedStar > 1 ? 's' : ''}` : "Select stars"}
-            </div>
-            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <li key={star} onClick={() => handleStarChange(star)}>
-                  <a>{`${star} Star${star > 1 ? 's' : ''}`}</a>
                 </li>
               ))}
             </ul>
           </div>
-          <button className="btn btn-primary m-1" onClick={() => setSelectedStar("")}>Clear</button>
         </div>
       </div>
-
-      <div className="flex flex-col my-4">
-        <label>Price Range: ${priceRange[0]} - ${priceRange[1]}</label>
-        <input
-          type="range"
-          min={minPrice}
-          max={maxPrice}
-          data-index="0"
-          value={priceRange[0]}
-          onChange={handlePriceChange}
-          className="range range-xs"
-        />
-        <input
-          type="range"
-          min={minPrice}
-          max={maxPrice}
-          data-index="1"
-          value={priceRange[1]}
-          onChange={handlePriceChange}
-          className="range range-xs"
-        />
-        <button className="btn btn-primary m-1 mt-4" onClick={() => setPriceRange([minPrice, maxPrice])}>Clear Price</button>
+  
+      <div className="my-4">
+        <div className="flex items-center">
+          <div className="dropdown dropdown-hover flex-1">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn m-1 w-full bg-blue-500 text-black"
+            >
+              {selectedGama || "Select a gama"}
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
+              {["Baja", "Media", "Alta"].map((gama) => (
+                <li key={gama} onClick={() => handleGamaChange(gama)}>
+                  <a>{gama}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <div className="my-4">
+        <div className="flex items-center">
+          <div className="dropdown dropdown-hover flex-1">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn m-1 w-full bg-blue-500 text-black"
+            >
+              {selectedStar
+                ? `${selectedStar} Star${selectedStar > 1 ? "s" : ""}`
+                : "Select stars"}
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
+              {[1, 2, 3, 4, 5].map((star) => (
+                <li key={star} onClick={() => handleStarChange(star)}>
+                  <a>{`${star} Star${star > 1 ? "s" : ""}`}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <div className="my-4">
+        <button className="btn bg-blue-500 text-black w-full" onClick={resetFilters}>
+          Reset Filters
+        </button>
       </div>
     </div>
   );
-};
+}  
 
-Filters.propTypes = {
-  onFilterChange: PropTypes.func.isRequired,
-  minPrice: PropTypes.number.isRequired,
-  maxPrice: PropTypes.number.isRequired,
-};
 export default Filters;
