@@ -6,7 +6,7 @@ import UserPage from "./views/UserPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./views/Home";
 import Product from "./views/Product";
-import AllReviews from "./views/AllReviews"; // Asegúrate de importar el nuevo componente
+import AllReviews from "./views/AllReviews";
 import "./App.css";
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
             </>
           }
         />
-        <Route path="/allreviews" element={<AllReviews />} /> {/* Nueva ruta */}
+        <Route path="/allreviews" element={<AllReviews />} />
       </Routes>
     </Router>
   );

@@ -11,7 +11,6 @@ function ProductList() {
   const navigate = useNavigate();
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
-
   const createSlug = (name) => {
     return name
       .toLowerCase()
@@ -22,7 +21,7 @@ function ProductList() {
 
   const fetchProducts = useCallback(async () => {
     try {
-      const response = await fetch("http://localhost:3001/review");
+      const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/review`);
       const data = await response.json();
 
       const productsWithSlug = data.map((product) => ({
@@ -32,7 +31,6 @@ function ProductList() {
 
       setProducts(productsWithSlug);
       setFilteredProducts(productsWithSlug);
-      console.log("Fetched Products with Slug:", productsWithSlug);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -100,12 +98,10 @@ function ProductList() {
 
   return (
     <div className="flex mt-8">
-      {/* Filtro con margen derecho */}
       <aside className="w-1/4 p-4 bg-black border rounded border-silver mr-4">
         <Filters onFilterChange={handleFilterChange} />
       </aside>
   
-      {/* Contenido principal */}
       <main className="flex-1 p-0 bg-base-100">
         <div className="border-silver border-2 p-4 rounded bg-black">
           <div className="mb-4 flex justify-between items-center">
@@ -122,7 +118,7 @@ function ProductList() {
             {filteredProducts.map((product, index) => (
               <li
                 key={index}
-                className="mb-4 p-4 border rounded flex cursor-pointer bg-gray-200" // Fondo plomizo suave para cada review
+                className="mb-4 p-4 border rounded flex cursor-pointer bg-gray-200"
                 onClick={() => handleProductClick(product.slug)}
               >
                 <img

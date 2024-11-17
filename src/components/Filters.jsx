@@ -9,14 +9,12 @@ const Filters = ({ onFilterChange }) => {
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const response = await fetch("http://localhost:3001/brands");
+        const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/brands`);
         const data = await response.json();
 
         const uniqueBrands = data
 
         setBrands(uniqueBrands);
-  
-        console.log(uniqueBrands)
       } catch (error) {
         console.error("Error fetching brands:", error);
       }

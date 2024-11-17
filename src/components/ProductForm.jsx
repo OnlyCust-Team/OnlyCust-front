@@ -23,8 +23,8 @@ function ProductForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const productUrl = "http://localhost:3001/addProduct";
-    const reviewUrl = "http://localhost:3001/addReview";
+    const productUrl = `${import.meta.env.VITE_DATABASE_URL}/addProduct`;
+    const reviewUrl = `${import.meta.env.VITE_DATABASE_URL}/addReview`;
 
     const productData = {
       name: formData.name,
@@ -44,7 +44,6 @@ function ProductForm() {
     };
 
     try {
-      // Enviar datos del producto
       const productResponse = await fetch(productUrl, {
         method: "POST",
         headers: {
@@ -57,10 +56,6 @@ function ProductForm() {
         throw new Error("Error al enviar el producto");
       }
 
-      const productResult = await productResponse.json();
-      console.log("Producto enviado con éxito:", productResult);
-
-      // Enviar datos de la reseña
       const reviewResponse = await fetch(reviewUrl, {
         method: "POST",
         headers: {
@@ -73,15 +68,18 @@ function ProductForm() {
         throw new Error("Error al enviar la reseña");
       }
 
-      const reviewResult = await reviewResponse.json();
-      console.log("Reseña enviada con éxito:", reviewResult);
-
-      // Mostrar mensaje de éxito
       setSuccessMessage("Producto y reseña enviados con éxito!");
 
-      // Redirigir a la página del producto después de 2 segundos
       setTimeout(() => {
-        navigate(`/${formData.name}`);
+        const createSlug = (name) => {
+          return name
+            .toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '')
+            .trim()
+            .replace(/\s+/g, '-');
+        };
+        const slug = createSlug(formData.name)
+        navigate(`/${slug}`);
       }, 2000);
 
     } catch (error) {
