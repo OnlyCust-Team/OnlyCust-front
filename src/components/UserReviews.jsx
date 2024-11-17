@@ -11,7 +11,7 @@ function UserReviews() {
     if (isAuthenticated) {
       const fetchUserReviews = async () => {
         try {
-          const response = await fetch('http://localhost:3001/review');
+          const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/review`);
           const data = await response.json();
 
           const filteredReviews = data
@@ -45,7 +45,6 @@ function UserReviews() {
 
   return (
     <div className="p-4 w-full mt-4 relative">
-      {/* Contenedor con el título y los botones de navegación */}
       <div className="flex items-center justify-between mb-4">
         <button 
           onClick={prevPage} 

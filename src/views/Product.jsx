@@ -4,11 +4,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 function Product() {
   const { slug } = useParams();
-  const { user, isAuthenticated, loginWithRedirect } = useAuth0(); // Añadir isAuthenticated aquí
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
-
-  const fixedSlug = slug.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-');
 
   useEffect(() => {
     const createSlug = (name) => {
@@ -20,19 +18,16 @@ function Product() {
     };
     const fetchProduct = async () => {
       try {
-        const response = await fetch("http://localhost:3001/review");
+        const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/review`);
         const data = await response.json();
         const productsWithSlug = data.map((product) => ({
           ...product,
           slug: createSlug(product.name),
         }));
 
-
-        const foundProduct = productsWithSlug.find((item) => item.slug === fixedSlug);
+        const foundProduct = productsWithSlug.find((item) => item.slug === slug);
 
         setProduct(foundProduct);
-
-        console.log(foundProduct);
       } catch (error) {
         console.error("Error fetching brands:", error);
       }

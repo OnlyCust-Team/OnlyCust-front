@@ -19,7 +19,7 @@ function ReviewForm({ product }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = "http://localhost:3001/addReview";
+    const url = `${import.meta.env.VITE_DATABASE_URL}/addReview`;
 
     const dataToSend = {
       productName: product.name,
@@ -41,14 +41,7 @@ function ReviewForm({ product }) {
       if (!response.ok) {
         throw new Error("Error al enviar la reseña");
       }
-
-      const data = await response.json();
-      console.log("Reseña enviada con éxito:", data);
-
-      // Mostrar mensaje de éxito
       setSuccessMessage("Reseña enviada con éxito!");
-
-      // Redirigir a la página del producto después de 2 segundos
       setTimeout(() => {
         navigate(`/${product.slug}`);
       }, 2000);
